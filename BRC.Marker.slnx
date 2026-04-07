@@ -1,0 +1,7 @@
+<Solution>
+    <Project Path="src/BRC.Marker.Desktop/BRC.Marker.Desktop.csproj" />
+    <Project Path="src/BRC.Marker/BRC.Marker.csproj" />
+    <Folder Name="/Solution Items/">
+        <File Path="src/Directory.Packages.props" />
+    </Folder>
+</Solution>

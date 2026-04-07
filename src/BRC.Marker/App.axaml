@@ -1,0 +1,38 @@
+<Application
+    Name="BRC Marker"
+    x:Class="BRC.Marker.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:semi="https://irihi.tech/semi"
+    xmlns:vm="clr-namespace:BRC.Marker.ViewModels"
+    x:DataType="vm:ApplicationViewModel">
+    <Application.Styles>
+        <semi:SemiTheme Locale="zh-CN" />
+        <semi:SemiPopupAnimations />
+        <semi:ColorPickerSemiTheme />
+    </Application.Styles>
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Themes/_index.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+    <TrayIcon.Icons>
+        <TrayIcons>
+            <TrayIcon
+                Icon="{OnPlatform Default=/Assets/BRC.ico, macOS=/Assets/BRC.ico}"
+                MacOSProperties.IsTemplateIcon="true"
+                Command="{Binding ActivateCommand}"
+                ToolTipText="BRC Marker">
+                <TrayIcon.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem
+                            Header="Exit"
+                            Command="{Binding ExitCommand}" />
+                    </NativeMenu>
+                </TrayIcon.Menu>
+            </TrayIcon>
+        </TrayIcons>
+    </TrayIcon.Icons>
+</Application>

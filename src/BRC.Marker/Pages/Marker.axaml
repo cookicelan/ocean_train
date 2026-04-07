@@ -1,0 +1,111 @@
+﻿<UserControl
+x:Class="BRC.Marker.Pages.Marker"
+xmlns="https://github.com/avaloniaui"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:local="clr-namespace:BRC.Marker.Pages"
+d:DesignHeight="450"
+d:DesignWidth="800"
+mc:Ignorable="d">
+
+	<Grid
+	HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch"
+	ColumnDefinitions="*, Auto, 3*, Auto,*"
+	DragDrop.AllowDrop="True"
+	DragDrop.Drop="OnDrop">
+
+		<Border
+		Grid.Column="0"
+		HorizontalAlignment="Stretch"
+		Background="{DynamicResource SemiGrey0Color}"
+		CornerRadius="10" >
+			<StackPanel Spacing="10" Margin="10">
+				<Button Click="ButtonClick_PageUp" Content="上一页" HorizontalAlignment="Stretch" />
+				<Button Click="ButtonClick_PageDown" Content="下一页" HorizontalAlignment="Stretch" />
+
+				<Button Click="ButtonClick_Rectangle" Content="矩形标注" HorizontalAlignment="Stretch" />
+
+				<Separator Background="Gray" Height="1" />
+				<Button Click="ButtonClick_File" Content="选择图片文件" HorizontalAlignment="Stretch" Classes="Tertiary" />
+			</StackPanel>
+		</Border>
+
+		<GridSplitter Grid.Column="1" ShowsPreview="True" />
+
+		<Border
+		Grid.Column="2"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		Background="{DynamicResource SemiGrey0Color}"
+		CornerRadius="10"
+		ClipToBounds="True">
+
+			<Panel>
+				<Image
+				x:Name="MarkImage"
+				Source=""
+				Stretch="Uniform"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Stretch"
+				Margin="10"/>
+
+				<Canvas
+				x:Name="AnnotationCanvas"
+				Background="Transparent"
+				IsVisible="False"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Stretch"
+				Margin="10" />
+			</Panel>
+		</Border>
+
+		<GridSplitter Grid.Column="3" ShowsPreview="True" />
+
+		<Border
+		Grid.Column="4"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		Background="{DynamicResource SemiGrey0Color}"
+		CornerRadius="10" >
+
+			<Grid RowDefinitions="1*, Auto, 2*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+				<StackPanel Grid.Row="0" Spacing="10" Margin="10" VerticalAlignment="Stretch">
+					<TextBlock Text="标签" FontWeight="Bold" HorizontalAlignment="Center"/>
+					<ListBox ItemsSource="" />
+				</StackPanel>
+
+				<Separator
+				Grid.Row="1"
+				Background="Gray"
+				Height="1"
+				HorizontalAlignment="Stretch"/>
+
+				<Grid Grid.Row="2" RowDefinitions="Auto, *" Margin="10">
+
+					<TextBlock Grid.Row="0"
+							   Text="图片列表"
+							   FontWeight="Bold"
+							   HorizontalAlignment="Center"
+							   Margin="0,0,0,10"/>
+
+					<HeaderedContentControl Grid.Row="1" Theme="{StaticResource GroupBox}">
+						<ListBox
+						x:Name="ImageListBox"
+						SelectionChanged="ImageListBox_SelectionChanged">
+
+							<ListBox.ItemTemplate>
+								<DataTemplate DataType="local:ImageFileItem">
+									<TextBlock Text="{Binding FileName}" Padding="5"/>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</HeaderedContentControl>
+				</Grid>
+			</Grid>
+		</Border>
+
+	</Grid>
+
+</UserControl>

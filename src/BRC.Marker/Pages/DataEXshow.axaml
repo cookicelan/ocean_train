@@ -1,0 +1,59 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:BRC.Marker.Pages" 
+             x:Class="BRC.Marker.Pages.DataEXshow"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
+    
+    <Grid RowDefinitions="Auto, *, Auto" Margin="20">
+        
+        <StackPanel Grid.Row="0" Spacing="10">
+            <TextBlock Text="数据预览 (仅展示第一个文件的结果)" FontSize="18" FontWeight="Bold"/>
+            <TextBlock x:Name="CurrentFileText" Text="当前文件: -" Foreground="Gray"/>
+        </StackPanel>
+
+        <TabControl x:Name="ChannelTabs" Grid.Row="1" Margin="0,10">
+            <TabControl.ItemTemplate>
+                <DataTemplate x:DataType="local:ChannelGroup">
+                    <TextBlock Text="{Binding ChannelName}" FontSize="16" FontWeight="Bold" Margin="5,0"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate x:DataType="local:ChannelGroup">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Images}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:PreviewImageItem">
+                                    <Border Margin="5" BorderBrush="#EEEEEE" BorderThickness="1" CornerRadius="4">
+                                        <StackPanel>
+                                            <Image Source="{Binding Image}" Height="200" Stretch="Uniform"/>
+                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Margin="5"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+        <StackPanel Grid.Row="2" Spacing="10">
+            <StackPanel x:Name="ProgressPanel" IsVisible="False">
+                <TextBlock x:Name="ProgressText" Text="正在处理..." HorizontalAlignment="Center"/>
+                <ProgressBar x:Name="MainProgressBar" Minimum="0" Maximum="100" Height="20" Margin="0,5"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15">
+                <Button Content="返回修改" Click="Button_Back" Classes="Secondary"/>
+                <Button Content="确认无误，生成所有高对比度时频图" Click="ButtonClick_ExecuteAll" Classes="Primary" FontWeight="Bold"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

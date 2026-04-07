@@ -1,0 +1,37 @@
+﻿<UserControl
+x:Class="BRC.Marker.Pages.data_preprocess"
+xmlns="https://github.com/avaloniaui"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:local="clr-namespace:BRC.Marker.Pages"
+d:DesignHeight="450"
+d:DesignWidth="800"
+mc:Ignorable="d">
+
+	<Grid
+	HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch"
+	ColumnDefinitions="*, Auto, 3*">
+
+		<Border
+		Grid.Column="0"
+		HorizontalAlignment="Stretch"
+		Background="{DynamicResource SemiGrey0Color}"
+		CornerRadius="10" >
+			<StackPanel Spacing="10" Margin="10">
+				<Button Click="ButtonClick_Chooseparameter" Content="参数选择" HorizontalAlignment="Stretch" />
+				<Button Click="ButtonClick_DataEX" Content="数据预展览" HorizontalAlignment="Stretch" />
+				<Separator Background="Gray" Height="1" />
+		</StackPanel>
+		</Border>
+
+		<GridSplitter Grid.Column="1" Background="Transparent" Width="5" ResizeDirection="Columns"/>
+
+		<Border Grid.Column="2" Margin="10,0,0,0" CornerRadius="10" Background="{DynamicResource SemiGrey0Color}">
+			<ContentControl x:Name="MainContentArea" />
+		</Border>
+
+	</Grid>
+
+</UserControl>

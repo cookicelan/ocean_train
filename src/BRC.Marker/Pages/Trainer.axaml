@@ -1,0 +1,121 @@
+﻿<UserControl
+x:Class="BRC.Marker.Pages.Trainer"
+xmlns="https://github.com/avaloniaui"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:local="clr-namespace:BRC.Marker.Pages"
+d:DesignHeight="450"
+d:DesignWidth="800"
+mc:Ignorable="d">
+
+	<Grid
+	HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch"
+	ColumnDefinitions="2*, Auto, 3*, Auto,3*"
+	DragDrop.AllowDrop="True"
+	DragDrop.Drop="OnDrop"> <Border
+	Grid.Column="0"
+	HorizontalAlignment="Stretch"
+	Background="{DynamicResource SemiGrey0Color}"
+	CornerRadius="10" >
+		<StackPanel Spacing="10" Margin="10">
+			<Button Click="ButtonClick_ChooseModel" Content="选择被训练的模型" HorizontalAlignment="Stretch" />
+			<Button Click="ButtonClick_ChooseData" Content="选择训练数据" HorizontalAlignment="Stretch" />
+			<Button Click="ButtonClick_ChooseExe" Content="选择训练程序位置" HorizontalAlignment="Stretch" />
+			<Separator Background="Gray" Height="1" />
+
+			<ScrollViewer MaxHeight="350" Margin="0,10,0,0">
+				<StackPanel Spacing="5">
+					<TextBlock Text="参数配置:" FontWeight="Bold" Margin="0,0,0,5"/>
+
+					<Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Margin="4">
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="Init LR:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<TextBox x:Name="InputInitLr" Grid.Row="0" Grid.Column="1" Text="0.0000333" Margin="0,0,0,8"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="Num Workers:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<NumericUpDown x:Name="InputNumWorkers" Grid.Row="1" Grid.Column="1" Value="4" Minimum="0" Maximum="32" Margin="0,0,0,8"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="Use CUDA:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<CheckBox x:Name="InputCuda" Grid.Row="2" Grid.Column="1" IsChecked="True" Margin="0,0,0,8"/>
+
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="Init Epoch:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<NumericUpDown x:Name="InputInitEpoch" Grid.Row="3" Grid.Column="1" Value="0" Minimum="0" Margin="0,0,0,8"/>
+
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="Freeze Epoch:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<NumericUpDown x:Name="InputFreezeEpoch" Grid.Row="4" Grid.Column="1" Value="50" Minimum="0" Margin="0,0,0,8"/>
+
+						<TextBlock Grid.Row="5" Grid.Column="0" Text="Freeze Batch:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<NumericUpDown x:Name="InputFreezeBatchSize" Grid.Row="5" Grid.Column="1" Value="8" Minimum="1" Margin="0,0,0,8"/>
+
+						<TextBlock Grid.Row="6" Grid.Column="0" Text="Unfreeze Epoch:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<NumericUpDown x:Name="InputUnfreezeEpoch" Grid.Row="6" Grid.Column="1" Value="200" Minimum="0" Margin="0,0,0,8"/>
+
+						<TextBlock Grid.Row="7" Grid.Column="0" Text="Unfreeze Batch:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+						<NumericUpDown x:Name="InputUnfreezeBatchSize" Grid.Row="7" Grid.Column="1" Value="8" Minimum="1" Margin="0,0,0,8"/>
+					</Grid>
+
+				</StackPanel>
+			</ScrollViewer>
+
+			<TextBlock Text="训练比例设置 (Train : Test)" TextWrapping="Wrap" Margin="4,0,4,0" />
+			<Grid ColumnDefinitions="*, Auto, *">
+				<StackPanel Grid.Column="0">
+					<TextBox x:Name="RatioTrainBox" Text="7" HorizontalContentAlignment="Center"/>
+				</StackPanel>
+				<StackPanel Grid.Column="1">
+					<TextBlock Text=":" Margin="4,4,4,0" VerticalAlignment="Center"/>
+				</StackPanel>
+				<StackPanel Grid.Column="2">
+					<TextBox x:Name="RatioTestBox" Text="3" HorizontalContentAlignment="Center"/>
+				</StackPanel>
+			</Grid>
+
+			<Separator Background="Gray" Height="1" />
+			<Button Click="ButtonClick_StartTrain" Content="开始训练" HorizontalAlignment="Stretch" Classes="Tertiary" />
+			<TextBlock x:Name="TrainModelName" Text="未选择模型" TextWrapping="Wrap" Margin="4,12,4,0" Foreground="Gray"/>
+			<TextBlock x:Name="ChooseExeName" Text="未选择训练程序" TextWrapping="Wrap" Margin="4,12,4,0" Foreground="Gray"/>
+		</StackPanel>
+	</Border>
+
+		<GridSplitter Grid.Column="1" ShowsPreview="True" />
+
+		<Border
+		Grid.Column="2"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		Background="{DynamicResource SemiGrey0Color}"
+		CornerRadius="10" >
+			<Grid RowDefinitions="Auto, *">
+				<TextBlock Grid.Row="0" Text="训练集 (Train)" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+				<ListBox Grid.Row="1" x:Name="TrainDataListBox" Margin="5">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding}" FontSize="12"/>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</Grid>
+		</Border>
+
+		<GridSplitter Grid.Column="3" ShowsPreview="True" />
+
+		<Border
+		Grid.Column="4"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		Background="{DynamicResource SemiGrey0Color}"
+		CornerRadius="10" >
+			<Grid RowDefinitions="Auto, *">
+				<TextBlock Grid.Row="0" Text="测试集 (Test)" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+				<ListBox Grid.Row="1" x:Name="TestDataListBox" Margin="5">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding}" FontSize="12"/>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</Grid>
+	</Border>
+</Grid>
+</UserControl>

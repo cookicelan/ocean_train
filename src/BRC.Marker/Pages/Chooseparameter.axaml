@@ -1,0 +1,214 @@
+﻿<UserControl
+    x:Class="BRC.Marker.Pages.Chooseparameter"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:BRC.Marker.Pages"
+    d:DesignHeight="500"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid
+        Margin="20"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Background="Transparent"
+        DragDrop.AllowDrop="True"
+        DragDrop.Drop="OnDrop">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" MinWidth="180" /> <ColumnDefinition Width="20" />                 <ColumnDefinition Width="3*" />                 </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <RowDefinition Height="20" />   <RowDefinition Height="Auto" /> <RowDefinition Height="20" />   <RowDefinition Height="Auto" /> <RowDefinition Height="20" />   <RowDefinition Height="Auto" /> <RowDefinition Height="*" />    <RowDefinition Height="Auto" /> </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            FontSize="16"
+            FontWeight="Bold"
+            Text="数据格式 / 采样率" />
+
+        <WrapPanel
+            Grid.Row="0"
+            Grid.Column="2"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            
+            <WrapPanel.Styles>
+                <Style Selector="RadioButton">
+                    <Setter Property="MinWidth" Value="100"/>
+                    <Setter Property="Margin" Value="0,0,10,5"/>
+                </Style>
+            </WrapPanel.Styles>
+
+            <RadioButton
+                x:Name="TdmsRadioButton"
+                Content="Tdms"
+                IsChecked="True"
+                Theme="{DynamicResource CardRadioButton}" />
+            <RadioButton
+                x:Name="CsvRadioButton"
+                Content="Csv"
+                IsChecked="True"
+                Theme="{DynamicResource CardRadioButton}" />
+            <RadioButton
+                x:Name="WavRadioButton"
+                Content="Wav"
+                IsChecked="True"
+                Theme="{DynamicResource CardRadioButton}" />
+            
+            <ComboBox
+                x:Name="ChooseRate"
+                Width="150"
+                Height="45"
+                Margin="20,0,0,0"
+                Classes="ClearButton"
+                PlaceholderText="采样率">
+                <ComboBoxItem>12800hz</ComboBoxItem>
+                <ComboBoxItem>25600hz</ComboBoxItem>
+                <ComboBoxItem>51200hz</ComboBoxItem>
+            </ComboBox>
+        </WrapPanel>
+
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            FontSize="16"
+            FontWeight="Bold"
+            Text="处理窗长 (Window Size)" />
+
+        <ComboBox
+            x:Name="windowsize"
+            Grid.Row="2"
+            Grid.Column="2"
+            MaxWidth="300"
+            HorizontalAlignment="Left"
+            Classes="ClearButton">
+            <ComboBoxItem>256</ComboBoxItem>
+            <ComboBoxItem>512</ComboBoxItem>
+            <ComboBoxItem>1024</ComboBoxItem>
+            <ComboBoxItem>2048</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            FontSize="16"
+            FontWeight="Bold"
+            Text="处理步长 (Step Size)" />
+
+        <ComboBox
+            x:Name="stepsize"
+            Grid.Row="4"
+            Grid.Column="2"
+            MaxWidth="300"
+            HorizontalAlignment="Left"
+            Classes="ClearButton">
+            <ComboBoxItem>64</ComboBoxItem>
+            <ComboBoxItem>128</ComboBoxItem>
+            <ComboBoxItem>256</ComboBoxItem>
+            <ComboBoxItem>512</ComboBoxItem>
+            <ComboBoxItem>1024</ComboBoxItem>
+            <ComboBoxItem>2048</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            FontSize="16"
+            FontWeight="Bold"
+            Text="时频图NG特征增强算法" />
+
+        <StackPanel
+            Grid.Row="6"
+            Grid.Column="2"
+            Orientation="Vertical"
+            Spacing="10">
+            
+            <StackPanel Orientation="Horizontal" Spacing="15">
+                <RadioButton
+                    x:Name="SelfRadioButton"
+                    MinWidth="120"
+                    Content="自增强算法"
+                    IsChecked="True"
+                    Theme="{DynamicResource CardRadioButton}" />
+                <RadioButton
+                    x:Name="OKRadioButton"
+                    MinWidth="150"
+                    Content="结合OK数据增强算法"
+                    Checked="Algorithm_CheckedChanged"
+                    Unchecked="Algorithm_CheckedChanged"
+                    Theme="{DynamicResource CardRadioButton}" />
+            </StackPanel>
+
+            <StackPanel 
+                x:Name="PanelOkData" 
+                IsVisible="False" 
+                Orientation="Horizontal" 
+                Spacing="8">
+                <TextBox 
+                    x:Name="TxtOkDataPath" 
+                    Width="300" 
+                    IsReadOnly="True" 
+                    Watermark="请选择OK样本数据目录..." 
+                    VerticalAlignment="Center" />
+                <Button 
+                    Content="浏览" 
+                    Click="BtnBrowseOkData_Click" 
+                    Classes="Primary" 
+                    VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+
+        <Border
+            Grid.Row="8"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Padding="20"
+            Background="#10808080"
+            CornerRadius="8"
+            BorderThickness="1"
+            BorderBrush="{DynamicResource SemiColorBorderBrush}">
+            
+            <Grid ColumnDefinitions="Auto, Auto, *">
+                <Button
+                    x:Name="Choosefile"
+                    Grid.Column="0"
+                    Width="120"
+                    Height="40"
+                    Classes="Primary"
+                    Click="ButtonClick_Choosefile"
+                    Content="选择文件" />
+                
+                <Button
+                    Grid.Column="1"
+                    Width="120"
+                    Height="40"
+                    Margin="15,0,0,0"
+                    Classes="Primary"
+                    Click="ButtonClick_Start"
+                    Content="参数选择完毕" />
+
+                <TextBlock
+                    Grid.Column="2"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Foreground="{DynamicResource SemiColorTextTertiary}"
+                    Text="拖拽文件夹到这里可实现批量读取"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

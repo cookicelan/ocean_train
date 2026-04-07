@@ -1,0 +1,50 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="BRC.Marker.TrainingProgressWindow"
+        Title="训练进度"
+        Width="650" Height="550" 
+        CanResize="True"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+
+    <Grid RowDefinitions="Auto, Auto, *" Margin="20">
+        
+        <ProgressBar x:Name="TrainingProgressBar"
+                     Grid.Row="0"
+                     Width="150"
+                     Height="150"
+                     Minimum="0"
+                     Maximum="100"
+                     Value="0"
+                     Theme="{DynamicResource ProgressRing}"
+                     ShowProgressText="True"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+
+        <TextBlock x:Name="StatusText" 
+                   Grid.Row="1" 
+                   Text="准备开始..." 
+                   HorizontalAlignment="Center" 
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Margin="0,15,0,10" 
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Foreground="Gray"/>
+
+        <TextBox x:Name="LogTextBox"
+                 Grid.Row="2"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="True"
+                 FontFamily="Consolas, Courier New, monospace"
+                 FontSize="13"
+                 Background="#1E1E1E"
+                 Foreground="#D4D4D4"
+                 BorderBrush="Gray"
+                 BorderThickness="1"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</Window>

@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="BRC.Marker.Views.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="using:BRC.Marker.Pages"
+    xmlns:views="clr-namespace:BRC.Marker.Views"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="views:MainViewModel"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ControlTheme x:Key="CategoryTabItem" TargetType="TabItem">
+            <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="TabItem">
+                    <TextBlock
+                        FontWeight="Bold"
+                        FontSize="12"
+                        Margin="4"
+                        Text="{TemplateBinding Header}" />
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:disabled /template/ TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource SemiColorText1}" />
+            </Style>
+        </ControlTheme>
+    </UserControl.Resources>
+    <Grid RowDefinitions="Auto, *">
+        <Border
+            Grid.Row="0"
+            Margin="8"
+            Padding="12,4"
+            Theme="{DynamicResource CardBorder}">
+            <Panel>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <ToggleSwitch
+                        Name="ExpandButton"
+                        Theme="{DynamicResource IconBorderlessToggleSwitch}"
+                        Content="{StaticResource SemiIconSidebar}" />
+                    <SelectableTextBlock
+                        VerticalAlignment="Center"
+                        Classes="H6"
+                        Text="Brc标注软件"
+                        Theme="{DynamicResource TitleSelectableTextBlock}" />
+                    <SelectableTextBlock
+                        VerticalAlignment="Center"
+                        Text="/" />
+                    <SelectableTextBlock
+                        VerticalAlignment="Center"
+                        Classes="Secondary"
+                        Text="{ReflectionBinding #tab.SelectedItem.Header}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <ToggleSwitch
+                        Theme="{DynamicResource IconBorderlessToggleSwitch}"
+                        Command="{Binding ToggleThemeCommand}"
+                        OnContent="{StaticResource SemiIconMoon}"
+                        OffContent="{StaticResource SemiIconSun}" />
+
+                    <Button
+                        Theme="{DynamicResource IconBorderlessButton}"
+                        Content="{StaticResource SemiIconMenu}">
+                        <Button.Flyout>
+                            <MenuFlyout Placement="Bottom" ItemsSource="{Binding MenuItems}" />
+                        </Button.Flyout>
+                        <Button.Styles>
+                            <Style Selector="MenuItem" x:DataType="views:MenuItemViewModel">
+                                <Setter Property="Header" Value="{Binding Header}" />
+                                <Setter Property="ItemsSource" Value="{Binding Items}" />
+                                <Setter Property="Command" Value="{Binding Command}" />
+                                <Setter Property="CommandParameter" Value="{Binding CommandParameter}" />
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+                </StackPanel>
+            </Panel>
+        </Border>
+        <TabControl
+            Name="tab"
+            Grid.Row="1"
+            Margin="0"
+            Padding="0,0,0,0"
+            TabStripPlacement="Left"
+            Classes.Dismiss="{Binding #ExpandButton.IsChecked}"
+            Theme="{DynamicResource ScrollLineTabControl}">
+            <TabControl.Styles>
+                <Style Selector=".Dismiss /template/ ScrollViewer#PART_ScrollViewer">
+                    <Setter Property="IsVisible" Value="False" />
+                </Style>
+            </TabControl.Styles>
+            <TabItem Header="数据预处理">
+                <pages:data_preprocess />
+            </TabItem>
+            <TabItem Header="标注">
+                <pages:Marker />
+            </TabItem>
+            <TabItem Header="训练">
+                <pages:Trainer />
+            </TabItem>
+            <TabItem Header="推理">
+                <pages:Deduction />
+            </TabItem>           
+        </TabControl>
+    </Grid>
+</UserControl>

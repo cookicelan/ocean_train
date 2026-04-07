@@ -1,0 +1,39 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="BRC.Marker.Deduction_resultshow"
+        Title="Deduction_resultshow">
+
+    <Grid>
+        <TextBlock Text="推理图片数量" 
+                   FontSize="30"
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"
+                   Margin="0,50,0,0"/>
+
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,30,0,0">
+            
+            <ProgressBar x:Name="TrainProgressBar"
+                         Width="200" Height="200"
+                         Minimum="0" Maximum="100"
+                         Value="0"
+                         Theme="{DynamicResource ProgressRing}"
+                         ShowProgressText="True"
+                         Foreground="DodgerBlue"/>
+
+            <TextBlock x:Name="DeductionedCountText" 
+                       Text="已推理图片数量:" 
+                       FontSize="18"
+                       HorizontalAlignment="Center" 
+                       Foreground="Gray"
+                       Margin="0,25,0,0"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
